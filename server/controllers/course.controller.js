@@ -49,7 +49,7 @@ const createCourse = async(req,res , next) => {
 
     if(!title || !description || !category || !createdBy){
         return next(
-            new AppError('All fields are required' , 400)
+            new AppError('All fields are required' , 405)
         )
     }
 
