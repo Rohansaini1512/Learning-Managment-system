@@ -12,6 +12,7 @@ import HomePage from "./Pages/HomePage";
 import Login from "./Pages/Login";
 import NotFound from "./Pages/NotFound";
 import Signup from "./Pages/Signup";
+import Profile from "./Pages/User/Profile";
 
 function App() {
 
@@ -23,7 +24,9 @@ function App() {
       <Route path="/courses" element={<CourseList />}/>
       <Route path="/contact" element={<Contact />}/>
       <Route path="/denied" element={<Denied />}/>
+
       <Route path="/course/description" element={<CourseDescription />}/>
+
       <Route path="/signup" element={<Signup />}></Route>
       <Route path="/login" element={<Login />}/>
       <Route path="*" element={<NotFound />}></Route>
@@ -31,6 +34,11 @@ function App() {
       <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
         <Route path="/course/create" element={<CreateCourse />}/>
       </Route>
+
+      <Route element={<RequireAuth allowedRoles={["ADMIN", "User"]}/>}>
+        <Route path="/user/profile" element={<Profile />}/>
+      </Route>
+
       </Routes>
       
     </>
