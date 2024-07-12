@@ -6,12 +6,13 @@ import Contact from "./Pages/Contact";
 import CourseDescription from "./Pages/Course/CourseDescription";
 import CourseList from "./Pages/Course/CourseList";
 import CreateCourse from "./Pages/Course/CreateCourse";
+import AddLecture from "./Pages/Dashboard/Addlecture";
 import Displaylectures from "./Pages/Dashboard/Displaylectures";
 import Denied from "./Pages/Denied";
 // import HomeLayout from "./Layouts/HomeLayout";
 import HomePage from "./Pages/HomePage";
 import Login from "./Pages/Login";
-import NotFound from "./Pages/NotFound";
+import NotFound from "./Pages/NotFound"
 import Checkout from "./Pages/Payment/Checkout";
 import CheckoutFailure from "./Pages/Payment/CheckoutFailure";
 import CheckoutSuccess from "./Pages/Payment/CheckoutSuccess";
@@ -45,6 +46,7 @@ function App() {
 
       <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
         <Route path="/course/create" element={<CreateCourse />}/>
+        <Route path="/course/addlecture" element={<AddLecture />}/>
       </Route>
 
       <Route element={<RequireAuth allowedRoles={["ADMIN", "User"]}/>}>

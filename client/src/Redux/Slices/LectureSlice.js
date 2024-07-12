@@ -1,14 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
 import axiosInstance from "../../Helpers/axiosInstance";
 
 const initialState = {
     lectures: []
-}
+};
 
-export const  getCourseLectures = createAsyncThunk("/course/lecture/get", async(cid) => {
-    try{
+export const getCourseLectures = createAsyncThunk("/course/lecture/get", async (cid) => {
+    try {
+        console.log("Course ID:", cid);
         const response = axiosInstance.get(`/courses/${cid}`);
         toast.promise(response, {
             loading: "Fetching course lectures",
@@ -16,7 +17,7 @@ export const  getCourseLectures = createAsyncThunk("/course/lecture/get", async(
             error: "Failed to load the lectures"
         });
         return (await response).data;
-    }catch(error){
+    } catch (error) {
         toast.error(error?.response?.data?.message);
     }
 });
@@ -30,27 +31,26 @@ export const addCourseLecture = createAsyncThunk("/course/lecture/add", async (d
 
         const response = axiosInstance.post(`/courses/${data.id}`, formData);
         toast.promise(response, {
-            loading: "adding course lecture",
+            loading: "Adding course lecture",
             success: "Lecture added successfully",
-            error: "Failed to add the lectures"
+            error: "Failed to add the lecture"
         });
         return (await response).data;
-    } catch(error) {
+    } catch (error) {
         toast.error(error?.response?.data?.message);
     }
 });
 
 export const deleteCourseLecture = createAsyncThunk("/course/lecture/delete", async (data) => {
     try {
-
         const response = axiosInstance.delete(`/courses?courseId=${data.courseId}&lectureId=${data.lectureId}`);
         toast.promise(response, {
-            loading: "deleting course lecture",
+            loading: "Deleting course lecture",
             success: "Lecture deleted successfully",
-            error: "Failed to delete the lectures"
+            error: "Failed to delete the lecture"
         });
         return (await response).data;
-    } catch(error) {
+    } catch (error) {
         toast.error(error?.response?.data?.message);
     }
 });
@@ -60,14 +60,21 @@ const lectureSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getCourseLectures.fullfilled, (state,action) => {
-            console.log(action);
-            state.lectures = action?.payload?.lectures;
-        })
-        .addCase(addCourseLecture.fullfilled, (state , action) => {
-            console.log(action);
-            state.lectures = action?.payload?.course?.lectures;
-        })
+        builder
+            .addCase(getCourseLectures.fulfilled, (state, action) => {
+                console.log(action);
+                state.lectures = action?.payload?.lectures;
+            })
+            .addCase(addCourseLecture.fulfilled, (state, action) => {
+                console.log(action);
+                state.lectures = action?.payload?.course?.lectures;
+            })
+            .addCase(deleteCourseLecture.fulfilled, (state, action) => {
+                console.log(action);
+                state.lectures = state.lectures.filter(
+                    (lecture) => lecture._id !== action.meta.arg.lectureId
+                );
+            });
     }
 });
 

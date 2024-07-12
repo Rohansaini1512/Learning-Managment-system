@@ -40,7 +40,7 @@ const getLectureByCourseId = async function(req,res,next){
         })
     }catch(e){
         return next(
-            new AppError(e.message, 500)
+            new AppError(e.message, 501)
         )
     }
 }
@@ -175,8 +175,10 @@ const addLectureToCourseById = async(req,res,next) => {
                 new AppError('All fields are required' , 400)
             )
         }
-    
+        console.log("Received title and description");
+
         const course = await Course.findById(id);
+        console.log("Fetched course by ID:", id);
     
         if(!course){
             return next(
@@ -189,11 +191,14 @@ const addLectureToCourseById = async(req,res,next) => {
             description,
             lecture: {},
         };
+        console.log("1");
     
         if (req.file) {
             try {
               const result = await cloudinary.v2.uploader.upload(req.file.path, {
                 folder: 'lms', // Save files in a folder named lms
+                chunk_size: 50000000, // 50 mb size
+                resource_type: 'video',
               });
         
               // If success
@@ -234,7 +239,7 @@ const addLectureToCourseById = async(req,res,next) => {
         })
     }catch(e){
         return next(
-            new AppError(e.message , 500)
+            new AppError(e.message , 506)
         )
     }
 }
