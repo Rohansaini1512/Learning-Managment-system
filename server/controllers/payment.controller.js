@@ -1,5 +1,9 @@
+import User from "../models/user.model.js";
 import { razorpay } from "../server.js";
 import AppError from "../utils/error.utils.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const getRazorpayApiKey = async (req,res,next) => {
     res.status(200).json({
@@ -27,11 +31,14 @@ export const buySubscription = async (req,res,next) => {
             )
         )
     }
-
+    console.log("Hello");
+    console.log(`Using Razorpay Plan ID: ${process.env.RAZORPAY_PLAN_ID}`);
     const subscription = await razorpay.subscriptions.create({
         plan_id: process.env.RAZORPAY_PLAN_ID,
         customer_notify: 1
     });
+
+    console.log(`Subscription created: ${JSON.stringify(subscription)}`);
 
     user.subscription.id = subscription.id;
     user.subscription.status = subscription.status;
