@@ -165,84 +165,71 @@ const removeCourse = async(req,res,next) => {
     }
 }
 
-const addLectureToCourseById = async(req,res,next) => {
-    try{
-        const { title , description } = req.body;
+const addLectureToCourseById = async (req, res, next) => {
+    try {
+        const { title, description } = req.body;
         const { id } = req.params;
-    
-        if(!title || !description){
-            return next(
-                new AppError('All fields are required' , 400)
-            )
+
+        if (!title || !description) {
+            return next(new AppError('All fields are required', 400));
         }
+
         console.log("Received title and description");
+        console.log("Course ID:", id); // Log the ID to verify it's being passed
 
         const course = await Course.findById(id);
         console.log("Fetched course by ID:", id);
-    
-        if(!course){
-            return next(
-                new AppError('Course with given id does not exist' , 500)
-            )
+
+        if (!course) {
+            return next(new AppError('Course with given id does not exist', 500));
         }
-    
+
         const lectureData = {
             title,
             description,
             lecture: {},
         };
-        console.log("1");
-    
+
         if (req.file) {
             try {
-              const result = await cloudinary.v2.uploader.upload(req.file.path, {
-                folder: 'lms', // Save files in a folder named lms
-                chunk_size: 50000000, // 50 mb size
-                resource_type: 'video',
-              });
-        
-              // If success
-              if (result) {
-                // Set the public_id and secure_url in array
-                lectureData.lecture.public_id = result.public_id;
-                lectureData.lecture.secure_url = result.secure_url;
-              }
-        
-              // After successful upload remove the file from local storage
-              fs.rm(`uploads/${req.file.filename}`);
+                const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                    folder: 'lms',
+                    chunk_size: 50000000,
+                    resource_type: 'video',
+                });
+
+                if (result) {
+                    lectureData.lecture.public_id = result.public_id;
+                    lectureData.lecture.secure_url = result.secure_url;
+                }
+
+                await fs.rm(`uploads/${req.file.filename}`);
             } catch (error) {
-              // Empty the uploads directory without deleting the uploads directory
-              for (const file of await fs.readdir('uploads/')) {
-                await fs.unlink(path.join('uploads/', file));
-              }
-        
-              // Send the error message
-              return next(
-                new AppError(
-                  JSON.stringify(error) || 'File not uploaded, please try again',
-                  400
-                )
-              );
+                for (const file of await fs.readdir('uploads/')) {
+                    await fs.unlink(path.join('uploads/', file));
+                }
+
+                return next(new AppError(
+                    JSON.stringify(error) || 'File not uploaded, please try again',
+                    400
+                ));
             }
         }
-    
+
         course.lectures.push(lectureData);
-    
         course.numberOfLectures = course.lectures.length;
-    
+
         await course.save();
-    
+
         res.status(200).json({
             success: true,
             message: 'Lecture successfully added to the course',
             course
-        })
-    }catch(e){
-        return next(
-            new AppError(e.message , 506)
-        )
+        });
+    } catch (e) {
+        return next(new AppError(e.message, 506));
     }
-}
+};
 
  const removeLectureFromCourse = asyncHandler(async (req, res, next) => {
     // Grabbing the courseId and lectureId from req.query

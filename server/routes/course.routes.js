@@ -34,6 +34,13 @@ router.route('/:id')
         upload.single('lecture'),
         addLectureToCourseById
     );
-    
+
+    // router.post(
+    //     '/:id/lectures',
+    //     isLoggedIn,
+    //     authorizedRoles('ADMIN'),
+    //     upload.single('lecture'),
+    //     addLectureToCourseById
+    // );
 
 export default router;
