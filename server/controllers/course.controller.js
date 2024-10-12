@@ -3,6 +3,7 @@ import asyncHandler from '../middleware/asyncHandler.middleware.js';
 import AppError from "../utils/error.utils.js";
 import fs from 'fs/promises';
 import cloudinary from 'cloudinary';
+import { Console } from "console";
 
 const getAllCourses = async function(req , res, next){
     try{
@@ -40,7 +41,7 @@ const getLectureByCourseId = async function(req,res,next){
         })
     }catch(e){
         return next(
-            new AppError(e.message, 501)
+            new AppError(e.message, 502)
         )
     }
 }
@@ -169,12 +170,15 @@ const addLectureToCourseById = async (req, res, next) => {
     try {
         const { title, description } = req.body;
         const { id } = req.params;
+        // Console.log(id)
 
         if (!title || !description) {
             return next(new AppError('All fields are required', 400));
         }
 
         console.log("Received title and description");
+        console.log(title);
+        console.log(description);
         console.log("Course ID:", id); // Log the ID to verify it's being passed
 
         const course = await Course.findById(id);
@@ -194,7 +198,7 @@ const addLectureToCourseById = async (req, res, next) => {
             try {
                 const result = await cloudinary.v2.uploader.upload(req.file.path, {
                     folder: 'lms',
-                    chunk_size: 50000000,
+                    chunk_size: 500000000000000000000000,
                     resource_type: 'video',
                 });
 
