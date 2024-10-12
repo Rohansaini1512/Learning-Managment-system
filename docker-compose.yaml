@@ -7,7 +7,7 @@ services:
       context: ./client   # Path to your frontend directory
       dockerfile: Dockerfile # Dockerfile for frontend
     ports:
-      - "5073:5073"          # Expose frontend on port 5073
+      - "5173:5173"          # Expose frontend on port 5073
     depends_on:
       - backend              # Ensure backend is running
     networks:
