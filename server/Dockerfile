@@ -1,8 +1,8 @@
 # Use Node.js 20 image
-FROM node:20
+FROM node:21
 
 # Set the working directory inside the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy the package.json and install dependencies
 COPY package.json ./
