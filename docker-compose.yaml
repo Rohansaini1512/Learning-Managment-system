@@ -1,35 +1,48 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  mongodb:
-    container_name: mongo
-    image: mongo:latest
-    volumes:
-      - ./backend/data:/data/db  # Ensure you're pointing to the correct MongoDB data directory
-    ports:
-      - "27017:27017"
-
-  backend:
-    container_name: backend
-    build: ./backend
-    env_file:
-      - ./backend/.env.sample
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mongodb
-    volumes:
-      - ./backend:/app  # Mount the backend directory for live changes
-
+  # Frontend Service
   frontend:
-    container_name: client
-    build: ./client
-    env_file:
-      - ./client/.env.sample
+    build:
+      context: ./client   # Path to your frontend directory
+      dockerfile: Dockerfile # Dockerfile for frontend
     ports:
-      - "5173:5173"
+      - "5173:5173"          # Expose frontend on port 5073
+    depends_on:
+      - backend              # Ensure backend is running
+    networks:
+      - app-network
+
+  # Backend Service
+  backend:
+    build:
+      context: ./server     # Path to your backend directory
+      dockerfile: Dockerfile # Dockerfile for backend
+    ports:
+      - "5014:5014"          # Expose backend on port 4000
+    environment:
+      - MONGO_URI=mongodb+srv://sainirohan830:GT8fY0UX309UXyl8@cluster0.rckjqfx.mongodb.net/mernstack?retryWrites=true&w=majority
+    depends_on:
+      - db                  # Ensure database is running
+    networks:
+      - app-network
+
+  # MongoDB Database Service
+  db:
+    image: mongo:latest      # Use the latest MongoDB image
+    container_name: mongo_db
+    ports:
+      - "27017:27017"        # Expose MongoDB on port 27017
     volumes:
-      - ./frontend:/app  # Mount the frontend directory for live changes
-      
+      - mongo-data:/data/db  # Persist MongoDB data
+    networks:
+      - app-network
+
+# Volumes for database persistence
 volumes:
-  data:
+  mongo-data:
+
+# Networks to connect services
+networks:
+  app-network:
+    driver: bridge
