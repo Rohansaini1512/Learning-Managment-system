@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile # Dockerfile for frontend
     ports:
       - "5173:5173"          # Expose frontend on port 5073
+    env_file:
+      - ./client/.env.sample
     depends_on:
       - backend              # Ensure backend is running
     networks:
@@ -20,8 +22,8 @@ services:
       dockerfile: Dockerfile # Dockerfile for backend
     ports:
       - "5014:5014"          # Expose backend on port 4000
-    environment:
-      - MONGO_URI=mongodb+srv://sainirohan830:GT8fY0UX309UXyl8@cluster0.rckjqfx.mongodb.net/mernstack?retryWrites=true&w=majority
+    env_file:
+      - ./server/.env.sample
     depends_on:
       - db                  # Ensure database is running
     networks:
