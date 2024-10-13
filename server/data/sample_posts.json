@@ -1,0 +1,48 @@
+[
+    {
+      "_id": "65b7a9dddb2041d0fc2cecc5",
+      "fullName": "rohan saini",
+      "email": "sainirohan830@gmail.com",
+      "password": "$2a$10$ZUdteC7B71RsWg8hMHooyO3VtFYKp/.Q6WgLlYHCMWBxVP2gBxgTi",
+      "avatar": {},
+      "role": "ADMIN",
+      "createdAt": "2024-01-29T13:36:29.420Z",
+      "updatedAt": "2024-01-29T13:36:35.079Z",
+      "__v": 0
+    },
+    {
+      "_id": "65d030566204405c243dd420",
+      "fullName": "yatin",
+      "email": "rohansaini15120@gmail.com",
+      "password": "$2a$10$lKLOFKfSx7nKQRbNd2H8GeHlw70JnqrFzQHzkVYDd4Bl9AGXDio6O",
+      "avatar": {},
+      "role": "USER",
+      "createdAt": "2024-02-17T04:04:38.351Z",
+      "updatedAt": "2024-02-17T04:04:41.085Z",
+      "__v": 0
+    },
+    {
+      "_id": "667120ced032ccf858cc2d36",
+      "fullName": "rohan",
+      "email": "2022kucp1050@gmail.com",
+      "password": "$2b$10$THtR24yDxE1oq9zWVHByfeBLbNLnumwg9JeowTLAu12JZo.gY/4Mm",
+      "avatar": {},
+      "role": "ADMIN",
+      "createdAt": "2024-06-18T05:53:18.511Z",
+      "updatedAt": "2024-06-18T09:46:25.700Z",
+      "forgotPasswordToken": "1aa6703fc7c720cdbd5c513ccf3ec938a4d93379395bdea737cd5c565b8e7aa1",
+      "__v": 0
+    },
+    {
+      "_id": "6688d11cd1d8506ded902681",
+      "fullName": "kunal",
+      "email": "2022kucp1050@iiitkota.ac.in",
+      "password": "$2b$10$/QajCzedv2iASuYyprG6hOXUEp5D3pvM01PNm/jek/Wk3fncXIrvO",
+      "avatar": {},
+      "role": "USER",
+      "createdAt": "2024-07-06T05:07:40.235Z",
+      "updatedAt": "2024-07-06T05:07:44.192Z",
+      "__v": 0
+    }
+  ]
+  
