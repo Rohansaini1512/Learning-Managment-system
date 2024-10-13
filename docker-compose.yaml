@@ -36,7 +36,7 @@ services:
     ports:
       - "27017:27017"        # Expose MongoDB on port 27017
     volumes:
-      - ./server/data:/data  # Persist MongoDB data
+      - ./server/data:/data/db  # Persist MongoDB data
     networks:
       - app-network
 
