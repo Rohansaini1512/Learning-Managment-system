@@ -5,14 +5,11 @@ FROM node:21
 WORKDIR /app
 
 # Copy the package.json and install dependencies
-COPY package.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy the entire frontend source code
 COPY . .
-
-# Build the frontend (optional if you're not building)
-# RUN npm run build
 
 # Expose the correct port (if it's running on port 5173)
 EXPOSE 5173

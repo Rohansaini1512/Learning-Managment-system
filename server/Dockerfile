@@ -1,11 +1,11 @@
-# Use Node.js 20 image
+# Use Node.js 21 image
 FROM node:21
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the package.json and install dependencies
-COPY package.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy the entire backend source code
