@@ -4,9 +4,9 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../Helpers/axiosInstance";
 
 const initialState = {
-    isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
+    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
     role: localStorage.getItem('role') || "",
-    data: localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : {}
+    data: localStorage.getItem('data') || {}
 };
 
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {

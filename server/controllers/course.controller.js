@@ -6,6 +6,7 @@ import cloudinary from 'cloudinary';
 import { Console } from "console";
 
 const getAllCourses = async function(req , res, next){
+    console.log("Fetching all courses...");
     try{
         const courses = await Course.find({}).select('-lecture');
 
