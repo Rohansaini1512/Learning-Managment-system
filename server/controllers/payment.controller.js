@@ -15,6 +15,13 @@ export const getRazorpayApiKey = async (req,res,next) => {
 
 export const buySubscription = async (req,res,next) => {
     try{
+        // Check if Razorpay is configured
+        if(!razorpay){
+            return next(
+                new AppError('Payment service is currently unavailable. Please contact support.', 503)
+            )
+        }
+
         const {id} = req.user;
     const user = await User.findById(id);
 
@@ -106,6 +113,13 @@ export const verifySubscription = async (req,res,next) => {
 
 export const cancelSubscription = async (req,res,next) => {
     try{
+        // Check if Razorpay is configured
+        if(!razorpay){
+            return next(
+                new AppError('Payment service is currently unavailable. Please contact support.', 503)
+            )
+        }
+
         const {id} = req.user;
     const user = await User.findById(id);
 
@@ -141,6 +155,13 @@ export const cancelSubscription = async (req,res,next) => {
 
 export const allPayment = async (req,res,next) => {
     try{
+        // Check if Razorpay is configured
+        if(!razorpay){
+            return next(
+                new AppError('Payment service is currently unavailable. Please contact support.', 503)
+            )
+        }
+
         const { count } = req.query;
 
     const subscriptions = await razorpay.subscriptions.all({
