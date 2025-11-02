@@ -1,5 +1,15 @@
 # LMS Frontend
 
+## 🌐 Live Application
+
+The application is deployed and running on AWS:
+
+**Live URL:** http://51.21.255.128/
+
+The application is hosted on AWS infrastructure and is accessible at the above URL.
+
+---
+
 ### Setup instruction
 
 1. Clone the project
